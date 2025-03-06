@@ -1,14 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://dg20vns8uxto4"]
+[gd_scene load_steps=5 format=3 uid="uid://dg20vns8uxto4"]
+
+[ext_resource type="Script" uid="uid://c3nucpwbvyli7" path="res://Templates/Character/character.gd" id="1_wkfil"]
+[ext_resource type="Script" uid="uid://blw8vbrmhhitl" path="res://Templates/Character/state_machine.gd" id="2_bj435"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4qr0o"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_etkth"]
-radial_segments = 9
+lightmap_size_hint = Vector2i(17, 14)
+radial_segments = 8
 rings = 1
 
 [node name="Character" type="CharacterBody3D"]
 collision_layer = 6
 collision_mask = 2
+script = ExtResource("1_wkfil")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -17,3 +22,6 @@ shape = SubResource("CapsuleShape3D_4qr0o")
 [node name="CSGMesh3D" type="CSGMesh3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_etkth")
+
+[node name="State Machine" type="Node" parent="."]
+script = ExtResource("2_bj435")

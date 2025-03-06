@@ -4,5 +4,5 @@ class_name Planet
 @onready var sprites: AnimatedSprite3D = $Sprites
 
 func _ready() -> void:
-	sprites.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	sprites.fixed_size = true
+	sprites.fixed_size = false
+	

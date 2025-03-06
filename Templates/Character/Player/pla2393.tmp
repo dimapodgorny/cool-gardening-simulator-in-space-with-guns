@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://bl36indqx52gx"]
+
+[ext_resource type="PackedScene" uid="uid://dg20vns8uxto4" path="res://Templates/Character/Character.tscn" id="1_t2bp7"]
+[ext_resource type="Script" path="res://Templates/Character/Player/player.gd" id="2_qsp2w"]
+[ext_resource type="Script" path="res://Templates/Character/Player/camera.gd" id="3_wrdlf"]
+[ext_resource type="Script" path="res://Templates/Character/Player/idle.gd" id="4_iugmw"]
+[ext_resource type="Script" path="res://Templates/Character/Player/run.gd" id="5_o38k1"]
+
+[node name="Player" instance=ExtResource("1_t2bp7")]
+script = ExtResource("2_qsp2w")
+
+[node name="Camera" type="Camera3D" parent="." index="0"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+script = ExtResource("3_wrdlf")
+
+[node name="State Machine" parent="." index="3" node_paths=PackedStringArray("initial_state")]
+unique_name_in_owner = true
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="State Machine" index="0"]
+script = ExtResource("4_iugmw")
+
+[node name="Run" type="Node" parent="State Machine" index="1"]
+script = ExtResource("5_o38k1")

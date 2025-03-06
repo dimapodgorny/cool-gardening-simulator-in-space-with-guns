@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://d03tv15f0ly5q"]
+
+[node name="Ship" type="Node3D"]

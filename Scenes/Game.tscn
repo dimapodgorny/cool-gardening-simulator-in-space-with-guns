@@ -1,19 +1,40 @@
-[gd_scene load_steps=3 format=3 uid="uid://422yswhcjvkg"]
+[gd_scene load_steps=8 format=3 uid="uid://422yswhcjvkg"]
 
+[ext_resource type="PackedScene" uid="uid://bl36indqx52gx" path="res://Templates/Character/Player/player.tscn" id="1_b1dbt"]
 [ext_resource type="PackedScene" uid="uid://c2bshlvm0kppk" path="res://Templates/Station/Space Station.tscn" id="1_dnuhu"]
 [ext_resource type="PackedScene" uid="uid://du0p62qqbplbb" path="res://Templates/Planet/Planet.tscn" id="2_nd1nr"]
+[ext_resource type="Texture2D" uid="uid://ci8odn06pai3t" path="res://Assets/Skyboxes/Skybox.png" id="4_5ll3b"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_a2kch"]
+panorama = ExtResource("4_5ll3b")
+
+[sub_resource type="Sky" id="Sky_fk50f"]
+sky_material = SubResource("PanoramaSkyMaterial_a2kch")
+
+[sub_resource type="Environment" id="Environment_mrrkj"]
+background_mode = 2
+sky = SubResource("Sky_fk50f")
+sky_custom_fov = 73.8
 
 [node name="Main" type="Node"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mrrkj")
 
 [node name="Game" type="Node3D" parent="."]
 
 [node name="Players" type="Node3D" parent="Game"]
 
+[node name="Player" parent="Game/Players" instance=ExtResource("1_b1dbt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.99213)
+jump_strength = 10.0
+
+[node name="Ships" type="Node3D" parent="Game"]
+
 [node name="Station" type="Node3D" parent="Game"]
 
 [node name="Space Station" parent="Game/Station" instance=ExtResource("1_dnuhu")]
-
-[node name="Ships" type="Node3D" parent="Game"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
 
 [node name="Planet" type="Node3D" parent="Game"]
 

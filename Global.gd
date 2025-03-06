@@ -9,3 +9,5 @@ var station_paths : Dictionary = {
 }
 
 var current_station : SpaceStation
+
+var player_template := "res://Templates/Character/Player/player.tscn"
