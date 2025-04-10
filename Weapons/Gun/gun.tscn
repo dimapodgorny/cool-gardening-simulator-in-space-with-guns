@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dq0wmwefxflrl"]
+
+[ext_resource type="PackedScene" uid="uid://qlkhk0vyiv27" path="res://Classes/Weapon/Weapon.tscn" id="1_21mmf"]
+[ext_resource type="Script" uid="uid://dgqs378b3jie3" path="res://Weapons/Gun/gun.gd" id="2_nhp2e"]
+[ext_resource type="PackedScene" uid="uid://cny51mkf1nsbb" path="res://Weapons/Gun/Bullet.tscn" id="3_njk1k"]
+
+[node name="Gun" instance=ExtResource("1_21mmf")]
+script = ExtResource("2_nhp2e")
+bullet_scene = ExtResource("3_njk1k")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Mesh" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0346435, 0.0291983)
+size = Vector3(0.03, 0.05, 0.15)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Mesh" index="1"]
+transform = Transform3D(0.999981, 0.00616097, 0, -0.0060291, 0.978577, -0.205794, -0.00126789, 0.20579, 0.978595, -1.75233e-05, -0.0158423, -0.0181451)
+size = Vector3(0.0244141, 0.0812256, 0.0338379)
+
+[node name="Barrel" type="RayCast3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0330115, 0.110793)
+target_position = Vector3(0, 0, 1)

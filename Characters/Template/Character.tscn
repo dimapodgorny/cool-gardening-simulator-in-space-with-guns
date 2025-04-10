@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpgxujb4t6gln"]
+
+[ext_resource type="Script" uid="uid://ciejc33ocrebo" path="res://Characters/Template/character.gd" id="1_vx5l7"]
+[ext_resource type="Script" uid="uid://crxy8f76x6ae1" path="res://Classes/finite_state_machine.gd" id="2_tedih"]
+[ext_resource type="Script" uid="uid://c2w4py0rp6rm1" path="res://Classes/Weapon/weapon_manager.gd" id="3_liduc"]
+
+[node name="Character" type="CharacterBody3D"]
+script = ExtResource("1_vx5l7")
+
+[node name="Mesh" type="Node3D" parent="."]
+
+[node name="Weapon Manager" type="Node3D" parent="."]
+script = ExtResource("3_liduc")
+
+[node name="State Machine" type="Node" parent="."]
+script = ExtResource("2_tedih")

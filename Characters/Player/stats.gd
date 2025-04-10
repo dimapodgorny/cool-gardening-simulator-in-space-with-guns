@@ -1,0 +1,2 @@
+extends CharacterStats
+class_name PlayerStats

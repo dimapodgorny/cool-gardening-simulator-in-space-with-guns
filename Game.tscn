@@ -1,0 +1,115 @@
+[gd_scene load_steps=13 format=3 uid="uid://dxb5jidfld1pp"]
+
+[ext_resource type="PackedScene" uid="uid://b8pjeab62ywsb" path="res://Characters/Player/player.tscn" id="1_sb48q"]
+[ext_resource type="Texture2D" uid="uid://b1oxup6h356aw" path="res://Addons/kenney_prototype_textures/dark/texture_07.png" id="1_wbfu4"]
+[ext_resource type="PackedScene" uid="uid://brc1ptsn8qgw" path="res://Ships/Ship/ship.tscn" id="2_t88pq"]
+[ext_resource type="Script" uid="uid://dmy5fhedmvge6" path="res://Assets/InteractiveObject/interactive_object.gd" id="4_sb48q"]
+[ext_resource type="Script" uid="uid://crswdgm2wngtg" path="res://Scripts/testing stuff/ship_spawner.gd" id="5_t88pq"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sb48q"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_t88pq"]
+sky_material = SubResource("ProceduralSkyMaterial_sb48q")
+
+[sub_resource type="Environment" id="Environment_r0x5m"]
+background_mode = 2
+sky = SubResource("Sky_t88pq")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xkndl"]
+albedo_texture = ExtResource("1_wbfu4")
+uv1_triplanar = true
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_sb48q"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_t88pq"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_r0x5m"]
+radius = 2.12743
+
+[node name="Game" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_r0x5m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Players" type="Node3D" parent="."]
+
+[node name="Player" parent="Players" instance=ExtResource("1_sb48q")]
+
+[node name="Ships" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Ship" parent="Ships" instance=ExtResource("2_t88pq")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.4, 1.8, 7)
+
+[node name="Baseplate" type="Node3D" parent="."]
+top_level = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Baseplate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+use_collision = true
+collision_layer = 3
+size = Vector3(32, 4, 32)
+material = SubResource("StandardMaterial3D_xkndl")
+
+[node name="InteractiveArea" type="Area3D" parent="Baseplate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 7)
+script = ExtResource("4_sb48q")
+metadata/_custom_type_script = "uid://dmy5fhedmvge6"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Baseplate/InteractiveArea"]
+shape = SubResource("SphereShape3D_sb48q")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Baseplate/InteractiveArea"]
+
+[node name="Label3D" type="Label3D" parent="Baseplate/InteractiveArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+billboard = 2
+text = "interactable object"
+
+[node name="Ship Spawner" type="Area3D" parent="Baseplate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 7)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_t88pq")
+spawn_position = Vector3(0, 100, 0)
+ship_path = ExtResource("2_t88pq")
+metadata/_custom_type_script = "uid://dmy5fhedmvge6"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Baseplate/Ship Spawner"]
+shape = SubResource("SphereShape3D_t88pq")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Baseplate/Ship Spawner"]
+
+[node name="Label3D" type="Label3D" parent="Baseplate/Ship Spawner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+billboard = 2
+text = "spawn ship"
+
+[node name="PushAway" type="Area3D" parent="Baseplate/Ship Spawner"]
+gravity_space_override = 3
+gravity_point_center = Vector3(0, 1, 0)
+gravity_direction = Vector3(0, 1, 0)
+gravity = 1000.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Baseplate/Ship Spawner/PushAway"]
+shape = SubResource("SphereShape3D_r0x5m")
+debug_color = Color(0.696235, 0.28075, 1, 0.42)
+
+[node name="Marker3D" type="Marker3D" parent="Baseplate/Ship Spawner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 99, -7)
+
+[node name="Label3D" type="Label3D" parent="Baseplate/Ship Spawner/Marker3D"]
+billboard = 1
+shaded = true
+text = "ship will be spawned here :)"
+autowrap_mode = 1
+
+[node name="projectiles" type="Node3D" parent="." groups=["Projectiles"]]

@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://cny51mkf1nsbb"]
+
+[ext_resource type="Script" uid="uid://jxng3ctbal4j" path="res://Weapons/Gun/bullet.gd" id="1_4ns4u"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4ns4u"]
+size = Vector3(0.02, 0.02, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j8r5b"]
+albedo_color = Color(1, 1, 0, 1)
+emission_enabled = true
+emission = Color(0.73681, 1, 0.432239, 1)
+emission_energy_multiplier = 5.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_j8r5b"]
+material = SubResource("StandardMaterial3D_j8r5b")
+size = Vector3(0.02, 0.02, 1)
+
+[node name="Bullet" type="RigidBody3D"]
+gravity_scale = 0.0
+script = ExtResource("1_4ns4u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_4ns4u")
+disabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visibility_range_begin = 0.9
+visibility_range_begin_margin = 1.0
+visibility_range_fade_mode = 1
+mesh = SubResource("BoxMesh_j8r5b")
+
+[node name="HitCast" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, 1)
+hit_from_inside = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 20.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

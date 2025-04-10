@@ -1,0 +1,302 @@
+[gd_scene load_steps=19 format=3 uid="uid://b8pjeab62ywsb"]
+
+[ext_resource type="PackedScene" uid="uid://bpgxujb4t6gln" path="res://Characters/Template/Character.tscn" id="1_6xdwp"]
+[ext_resource type="Script" uid="uid://dvhk1r3iw7b17" path="res://Characters/Player/player.gd" id="2_j341n"]
+[ext_resource type="Script" uid="uid://dgd6eh781sc24" path="res://Characters/Player/stats.gd" id="3_cue0d"]
+[ext_resource type="Script" uid="uid://dm27x7hd5dxl7" path="res://Characters/Player/States/Idle.gd" id="4_bqsbk"]
+[ext_resource type="Script" uid="uid://cttybwncrmvsq" path="res://Characters/Player/camera.gd" id="4_klx3t"]
+[ext_resource type="PackedScene" uid="uid://cp8eksd5oo3n1" path="res://Characters/Player/Mesh/model.blend" id="4_yhol4"]
+[ext_resource type="PackedScene" uid="uid://bqbjdh0wf1hys" path="res://Weapons/printerr/printerr.tscn" id="5_va6lm"]
+[ext_resource type="Script" uid="uid://gn3q1hn3e66d" path="res://Characters/Player/States/walk.gd" id="5_xf5fp"]
+[ext_resource type="Script" uid="uid://cj4ai1x2gop74" path="res://Characters/Player/States/jump.gd" id="7_klx3t"]
+[ext_resource type="PackedScene" uid="uid://cs5mglif8lptx" path="res://Weapons/CrasherGun/CrasherGun.tscn" id="7_u2wkb"]
+[ext_resource type="Script" uid="uid://1yf3hkwd0w54" path="res://Characters/Player/States/Fall.gd" id="8_r5ew0"]
+[ext_resource type="Script" uid="uid://chsfe4lr4i1d4" path="res://Characters/Player/debug_ui.gd" id="9_r5ew0"]
+
+[sub_resource type="Resource" id="Resource_klx3t"]
+script = ExtResource("3_cue0d")
+max_health = 100.0
+move_speed = 5.0
+sprint_speed = 7.0
+crouch_speed = 3.0
+aerodynamics = 1.0
+jump_strength = 7.0
+metadata/_custom_type_script = "uid://dgd6eh781sc24"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xf5fp"]
+margin = 0.1
+radius = 0.2
+height = 1.55
+
+[sub_resource type="Animation" id="Animation_b71o8"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CrasherGun:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CrasherGun:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CrasherGun:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b71o8"]
+_data = {
+&"RESET": SubResource("Animation_b71o8")
+}
+
+[sub_resource type="Animation" id="Animation_u2wkb"]
+resource_name = "Fire"
+length = 0.2
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CrasherGun")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array()
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CrasherGun:rotation:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0, -2, -1.5708, 0, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CrasherGun:rotation:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CrasherGun:rotation:z")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x58m1"]
+_data = {
+&"Fire": SubResource("Animation_u2wkb")
+}
+
+[node name="Player" instance=ExtResource("1_6xdwp")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("2_j341n")
+debug_mode = true
+stats = SubResource("Resource_klx3t")
+
+[node name="Collision" type="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.775, 0)
+shape = SubResource("CapsuleShape3D_xf5fp")
+
+[node name="CameraPivot" type="Node3D" parent="." index="1"]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.4, 0)
+
+[node name="Camera" type="Camera3D" parent="CameraPivot" index="0"]
+unique_name_in_owner = true
+cull_mask = 1048559
+doppler_tracking = 1
+current = true
+script = ExtResource("4_klx3t")
+camera_sensivity = 0.5
+
+[node name="Reach" type="RayCast3D" parent="CameraPivot/Camera" index="0"]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+target_position = Vector3(0, 0, 2)
+collision_mask = 8
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="model" parent="Mesh" index="0" instance=ExtResource("4_yhol4")]
+
+[node name="Weapon Manager" parent="." index="3" node_paths=PackedStringArray("Slot1", "Slot2")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0.3)
+Slot1 = NodePath("printerr")
+Slot2 = NodePath("CrasherGun")
+
+[node name="printerr" parent="Weapon Manager" index="0" instance=ExtResource("5_va6lm")]
+transform = Transform3D(-0.159752, 0.00641632, -0.987136, 0.0401318, 0.999194, 0, 0.986341, -0.0396155, -0.159881, -0.198, -0.089, 0)
+
+[node name="CrasherGun" parent="Weapon Manager" index="1" instance=ExtResource("7_u2wkb")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -0.216, -0.131, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Weapon Manager" index="2"]
+libraries = {
+&"": SubResource("AnimationLibrary_b71o8"),
+&"Crashergun": SubResource("AnimationLibrary_x58m1")
+}
+
+[node name="State Machine" parent="." index="4" node_paths=PackedStringArray("initial_state")]
+unique_name_in_owner = true
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="State Machine" index="0"]
+script = ExtResource("4_bqsbk")
+metadata/_custom_type_script = "uid://41ny14km8pik"
+
+[node name="Walk" type="Node" parent="State Machine" index="1"]
+script = ExtResource("5_xf5fp")
+metadata/_custom_type_script = "uid://41ny14km8pik"
+
+[node name="Jump" type="Node" parent="State Machine" index="2"]
+script = ExtResource("7_klx3t")
+metadata/_custom_type_script = "uid://41ny14km8pik"
+
+[node name="Fall" type="Node" parent="State Machine" index="3"]
+script = ExtResource("8_r5ew0")
+metadata/_custom_type_script = "uid://41ny14km8pik"
+
+[node name="Interface" type="SubViewportContainer" parent="." index="5"]
+unique_name_in_owner = true
+offset_right = 512.0
+offset_bottom = 512.0
+
+[node name="debug_ui" type="SubViewport" parent="Interface" index="0" node_paths=PackedStringArray("player")]
+unique_name_in_owner = true
+process_mode = 4
+process_priority = 2
+process_physics_priority = 2
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+script = ExtResource("9_r5ew0")
+player = NodePath("../..")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/debug_ui" index="0"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CurrentState" type="Control" parent="Interface/debug_ui/VBoxContainer" index="0"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Interface/debug_ui/VBoxContainer/CurrentState" index="0"]
+layout_mode = 2
+offset_top = 4.0
+offset_right = 75.0
+offset_bottom = 27.0
+
+[node name="Type" type="Label" parent="Interface/debug_ui/VBoxContainer/CurrentState/HBoxContainer" index="0"]
+layout_mode = 2
+text = "Current State:"
+
+[node name="Value" type="Label" parent="Interface/debug_ui/VBoxContainer/CurrentState/HBoxContainer" index="1"]
+layout_mode = 2
+text = "n/a"
+
+[node name="PreviousState" type="Control" parent="Interface/debug_ui/VBoxContainer" index="1"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Interface/debug_ui/VBoxContainer/PreviousState" index="0"]
+layout_mode = 2
+offset_top = 4.0
+offset_right = 75.0
+offset_bottom = 27.0
+
+[node name="Type" type="Label" parent="Interface/debug_ui/VBoxContainer/PreviousState/HBoxContainer" index="0"]
+layout_mode = 2
+text = "Previous State:"
+
+[node name="Value" type="Label" parent="Interface/debug_ui/VBoxContainer/PreviousState/HBoxContainer" index="1"]
+layout_mode = 2
+text = "n/a"
+
+[node name="MovementSpeed" type="Control" parent="Interface/debug_ui/VBoxContainer" index="2"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Interface/debug_ui/VBoxContainer/MovementSpeed" index="0"]
+layout_mode = 2
+offset_top = 4.0
+offset_right = 75.0
+offset_bottom = 27.0
+
+[node name="Type" type="Label" parent="Interface/debug_ui/VBoxContainer/MovementSpeed/HBoxContainer" index="0"]
+layout_mode = 2
+text = "Velocity:"
+
+[node name="Value" type="Label" parent="Interface/debug_ui/VBoxContainer/MovementSpeed/HBoxContainer" index="1"]
+layout_mode = 2
+text = "n/a"
+
+[node name="Equipped" type="Control" parent="Interface/debug_ui/VBoxContainer" index="3"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Interface/debug_ui/VBoxContainer/Equipped" index="0"]
+layout_mode = 2
+offset_top = 4.0
+offset_right = 75.0
+offset_bottom = 27.0
+
+[node name="Type" type="Label" parent="Interface/debug_ui/VBoxContainer/Equipped/HBoxContainer" index="0"]
+layout_mode = 2
+text = "Equipped:"
+
+[node name="Value" type="Label" parent="Interface/debug_ui/VBoxContainer/Equipped/HBoxContainer" index="1"]
+layout_mode = 2
+text = "n/a"
+
+[node name="Reach" type="Control" parent="Interface/debug_ui/VBoxContainer" index="4"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Interface/debug_ui/VBoxContainer/Reach" index="0"]
+layout_mode = 2
+offset_top = 4.0
+offset_right = 75.0
+offset_bottom = 27.0
+
+[node name="Type" type="Label" parent="Interface/debug_ui/VBoxContainer/Reach/HBoxContainer" index="0"]
+layout_mode = 2
+text = "Reach detecting:"
+
+[node name="Value" type="Label" parent="Interface/debug_ui/VBoxContainer/Reach/HBoxContainer" index="1"]
+layout_mode = 2
+text = "n/a"
